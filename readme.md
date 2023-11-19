@@ -2,6 +2,17 @@
 
 FitFrame style app.
 
+## Tecnologias Utilizadas
+
+### FrontEnd
+- Flutter
+
+### BackEnd
+- Fastify
+- TypeScript
+- Prisma
+- Zod
+
 ## RFs (Requisitos funcionais)
 - [ ] Deve ser possível se cadastrar
 - [ ] Deve ser possível se autenticar
@@ -22,6 +33,7 @@ FitFrame style app.
 
 ## RNs (Regras de negócio)
 - [ ] O usuário não deve poder se cadastrar com um e-mail duplicado
+- [ ] O usuário não deve poder finalizar um treino com menos de 5 minutos após iniciado
 
 ## RNFs (Requisitos não-funcionais)
 - [ ] A senha do usuário precisa estar criptografada
