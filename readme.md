@@ -29,6 +29,8 @@ FitFrame style app.
 - [ ] Deve ser possível adicionar um exercício a um treino
 - [ ] Deve ser possível remover um exercício a um treino
 - [ ] Deve ser possível obter os treinos ativos do usuário
+- [ ] Deve ser possível o usuário inativar um treino
+- [ ] Deve ser possível o usuário reativar um treino
 - [ ] Deve ser possível obter o histórico de treinos já finalizados pelo usuário
 
 ## RNs (Regras de negócio)
