@@ -50,7 +50,7 @@
         "summary": "Get all users",
         "responses": {
           "200": {
-            "description": "Sucess",
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
@@ -80,6 +80,12 @@
                 "properties": {
                   "name": {
                     "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password_hash": {
+                    "type": "string"
                   }
                 }
               }
@@ -88,11 +94,26 @@
         },
         "responses": {
           "201": {
-            "description": "Sucess",
+            "description": "Created",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "User with same email already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -116,7 +137,7 @@
         "summary": "Get a user by id",
         "responses": {
           "200": {
-            "description": "Sucess",
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
@@ -128,8 +149,15 @@
           "404": {
             "description": "User not found",
             "content": {
-              "application/son": {
-                "example": "Not Found"
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
               }
             }
           }
