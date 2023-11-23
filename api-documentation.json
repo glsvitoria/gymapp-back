@@ -45,30 +45,6 @@
   ],
   "paths": {
     "/users": {
-      "get": {
-        "tags": ["Users"],
-        "summary": "Get all users",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/User"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "auth": []
-          }
-        ]
-      },
       "post": {
         "tags": ["Users"],
         "summary": "Create a new User",
@@ -119,22 +95,62 @@
             }
           }
         }
-      }
-    },
-    "/users/{id}": {
-      "parameters": [
-        {
-          "name": "id",
-          "in": "path",
-          "schema": {
-            "type": "integer"
-          },
-          "required": true
-        }
-      ],
+      },
       "get": {
         "tags": ["Users"],
-        "summary": "Get a user by id",
+        "summary": "Get all users",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "auth": []
+          }
+        ]
+      }
+    },
+    "/sessions": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Create a new Session",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Success",
@@ -146,14 +162,782 @@
               }
             }
           },
-          "404": {
-            "description": "User not found",
+          "401": {
+            "description": "Invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/me": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get user by token",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/token/refresh": {
+      "patch": {
+        "tags": ["Users"],
+        "summary": "Refresh a token",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid credentials",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "error": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trainings": {
+      "get": {
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "tags": ["Trainings"],
+        "summary": "Get trainings",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Training"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Trainings not found",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
                     "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "auth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": ["Trainings"],
+        "summary": "Create a new Training",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "user_id": {
+                    "type": "string"
+                  },
+                  "number_of_times": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Training"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Training with same name already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trainings/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "schema": {
+            "type": "integer"
+          },
+          "required": true
+        }
+      ],
+      "get": {
+        "tags": ["Trainings"],
+        "summary": "Get a training by id",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Training"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Training not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Trainings"],
+        "summary": "Update a training by id",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "number_of_times": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Training"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Training not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Trainings"],
+        "summary": "Delete a training by id",
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Training not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trainings/{id}/inactive": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "schema": {
+            "type": "integer"
+          },
+          "required": true
+        }
+      ],
+      "put": {
+        "tags": ["Trainings"],
+        "summary": "Inactive a training by id",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Training not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trainings/{id}/active": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "schema": {
+            "type": "integer"
+          },
+          "required": true
+        }
+      ],
+      "put": {
+        "tags": ["Trainings"],
+        "summary": "Active a training by id",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Training not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trainings/user/${id}/active": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "schema": {
+            "type": "integer"
+          },
+          "required": true
+        }
+      ],
+      "get": {
+        "tags": ["Trainings"],
+        "summary": "Get a training active by user id",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Training"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Training not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/exercises": {
+      "get": {
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "tags": ["Exercises"],
+        "summary": "Get exercises",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Exercise"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "auth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": ["Exercises"],
+        "summary": "Create a new Exercise",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "series": {
+                    "type": "string"
+                  },
+                  "repetitions": {
+                    "type": "string"
+                  },
+                  "current_weight": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Exercise"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Exercise with same name already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Exercises"],
+        "summary": "Update a exercise by id",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "series": {
+                    "type": "string"
+                  },
+                  "repetitions": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Exercise"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Exercise not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Exercises"],
+        "summary": "Delete a exercise by id",
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Exercise not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/exercise/{exercise_id}/training/{training_id}": {
+      "parameters": [
+        {
+          "name": "exercise_id",
+          "in": "path",
+          "schema": {
+            "type": "integer"
+          },
+          "required": true
+        },
+        {
+          "name": "training_id",
+          "in": "path",
+          "schema": {
+            "type": "integer"
+          },
+          "required": true
+        }
+      ],
+      "post": {
+        "tags": ["Exercises"],
+        "summary": "Add a exercise in a training",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "404": {
+            "description": "Exercise or Training not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Exercises"],
+        "summary": "Delete a exercise in a training",
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Exercise or Training not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/weight/{weight_id}/exercise/{exercise_id}": {
+      "parameters": [
+        {
+          "name": "weight_id",
+          "in": "path",
+          "schema": {
+            "type": "integer"
+          },
+          "required": true
+        },
+        {
+          "name": "exercise_id",
+          "in": "path",
+          "schema": {
+            "type": "integer"
+          },
+          "required": true
+        }
+      ],
+      "post": {
+        "tags": ["Weights"],
+        "summary": "Add a weight in a exercise",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "404": {
+            "description": "Weight or Exercise not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Weights"],
+        "summary": "Delete a weight in a exercise",
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Weight or Exercise not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/${user_id}/exercise/${exercise_id}/weight/${weight_id}": {
+      "parameters": [
+        {
+          "name": "user_id",
+          "in": "path",
+          "schema": {
+            "type": "integer"
+          },
+          "required": true
+        },
+        {
+          "name": "exercise_id",
+          "in": "path",
+          "schema": {
+            "type": "integer"
+          },
+          "required": true
+        },
+        {
+          "name": "weight_id",
+          "in": "path",
+          "schema": {
+            "type": "integer"
+          },
+          "required": true
+        }
+      ],
+      "put": {
+        "tags": ["Weights"],
+        "summary": "Update a weight in a exercise",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Weight or Exercise not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
                       "type": "string"
                     }
                   }

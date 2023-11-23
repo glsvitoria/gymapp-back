@@ -63,6 +63,7 @@ FitFrame style app.
 - [ ] O usuário não deve poder se cadastrar com um e-mail duplicado
 - [ ] O usuário não deve poder finalizar um treino com menos de 10 minutos após iniciado
 - [ ] O usuário não deve poder finalizar um exercício com menos de 2 minutos após iniciado
+- [ ] O usuário não deve poder criar um treino com o nome de um treino duplicado
 
 ## RNFs (Requisitos não-funcionais)
 
