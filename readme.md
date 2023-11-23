@@ -79,3 +79,4 @@ FitFrame style app.
 - Colocar tempo de descanso
 - Exportar o treino e poder importar novamente
 - Música para cada treino
+- Firebase
