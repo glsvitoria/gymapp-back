@@ -33,6 +33,7 @@ FitFrame style app.
 - [ ] Deve ser possível o usuário reativar um treino
 - [ ] Deve ser possível obter os treinos ativos do usuário
 - [ ] Deve ser possível obter o histórico de treinos já finalizados pelo usuário
+- [ ] Deve ser possível visualizar pelo usuário o cronômetro daquele treino
 
 ### Exercícios
 
