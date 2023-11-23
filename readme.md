@@ -81,3 +81,4 @@ FitFrame style app.
 - Exportar o treino e poder importar novamente
 - Música para cada treino
 - Firebase
+- Notificação para lembrar de treinar (mapear o período que o usuário vai academia)
