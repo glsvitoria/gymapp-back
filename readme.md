@@ -51,7 +51,7 @@ FitFrame style app.
 
 ### Perfil
 
-- [ ] Deve ser possível se cadastrar
+- [X] Deve ser possível se cadastrar
 - [ ] Deve ser possível se autenticar
 - [ ] Deve ser possível recuperar a senha de um usuário
 - [ ] Deve ser possível obter o perfil de um usuário logado
@@ -60,14 +60,14 @@ FitFrame style app.
 
 ## RNs (Regras de negócio)
 
-- [ ] O usuário não deve poder se cadastrar com um e-mail duplicado
+- [X] O usuário não deve poder se cadastrar com um e-mail duplicado
 - [ ] O usuário não deve poder finalizar um treino com menos de 10 minutos após iniciado
 - [ ] O usuário não deve poder finalizar um exercício com menos de 2 minutos após iniciado
 - [ ] O usuário não deve poder criar um treino com o nome de um treino duplicado
 
 ## RNFs (Requisitos não-funcionais)
 
-- [ ] A senha do usuário precisa estar criptografada
+- [X] A senha do usuário precisa estar criptografada
 - [ ] Os dados da aplicação precisam estar persistidos em um banco PostgreSQL
 - [ ] Todas as listas de dados precisam estar paginadas com 20 itens por página
 - [ ] O usuário deve ser identificado por um JWT (JSON Web Token)
