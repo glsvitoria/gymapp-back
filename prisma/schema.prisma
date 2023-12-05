@@ -20,7 +20,17 @@ model User {
   Training      Training[]
   Exercise      Exercise[]
 
+  ResetPassCode ResetPassCode?
+
   @@map("users")
+}
+
+model ResetPassCode {
+  code        String   @default("")
+  expires_ind DateTime @default(now())
+
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String @unique
 }
 
 model Training {
